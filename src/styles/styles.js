@@ -15,6 +15,10 @@ const styles = StyleSheet.create({
   boxText: {
     color: 'red',
   },
+  textLink: {
+    fontSize: 16,
+    color: '#0364AB',
+  },
 });
 
 export default styles;
