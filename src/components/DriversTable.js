@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {FlatList, Text, View} from 'react-native';
-import {StyleSheet} from 'react-native';
+import {FlatList, Text, View, StyleSheet} from 'react-native';
 
 import globalStyles, {getSize} from '../styles';
+import TextLink from './TextLink';
 
 const styles = StyleSheet.create({
   dataRow: {
@@ -19,22 +19,24 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   dataCell: {
-    flex: 2,
+    flex: 3,
     fontSize: getSize('TEXT'),
   },
   headCell: {
-    flex: 2,
+    flex: 3,
     fontSize: getSize('TEXT'),
     fontWeight: 'bold',
-    //textAlign: 'center',
   },
   nameCell: {
     textAlign: 'left',
-    flex: 5,
+    flex: 7,
   },
   numberCell: {
     flex: 1,
     //minWidth: getSize('TEXT', 'LARGE'),
+  },
+  racesCell: {
+    flex: 2,
   },
 });
 
@@ -42,25 +44,47 @@ const DriversHeadRow = () => {
   return (
     <View style={styles.dataRow}>
       <Text style={[styles.headCell, styles.nameCell]}>Name</Text>
+      <Text style={[styles.headCell, styles.racesCell]}>Races</Text>
       <Text style={[styles.headCell, styles.numberCell]}>N#</Text>
-      <Text style={[styles.headCell, styles.headCell]}>Nationality</Text>
-      <Text style={[styles.headCell, styles.headCell]}>Born</Text>
+      <Text style={[styles.headCell]}>Nationality</Text>
+      <Text style={[styles.headCell]}>Born</Text>
     </View>
   );
 };
 
-const DriversTableRow = ({name, number, nationality, born}) => {
+const DriversTableRow = ({
+  name,
+  number,
+  nationality,
+  born,
+  driverId,
+  url,
+  navigation,
+}) => {
   return (
     <View style={styles.dataRow}>
-      <Text style={[styles.dataCell, styles.nameCell]}>{name}</Text>
-      <Text style={styles.numberCell}>{number}</Text>
+      <TextLink
+        style={[styles.dataCell, styles.nameCell]}
+        onPress={() => {
+          navigation.navigate('Driver', {name, number, nationality, born, url});
+        }}>
+        {name}
+      </TextLink>
+      <TextLink
+        style={[styles.dataCell, styles.racesCell]}
+        onPress={() => {
+          navigation.navigate('DriverRaces', {driverId});
+        }}>
+        Races
+      </TextLink>
+      <Text style={[styles.dataCell, styles.numberCell]}>{number}</Text>
       <Text style={styles.dataCell}>{nationality}</Text>
       <Text style={styles.dataCell}>{born}</Text>
     </View>
   );
 };
 
-const DriversTable = ({data}) => {
+const DriversTable = ({data, navigation}) => {
   console.log('DriversTable data=', data);
   const _renderItem = ({item}) => {
     return (
@@ -70,6 +94,9 @@ const DriversTable = ({data}) => {
           number={item.number}
           nationality={item.nationality}
           born={item.born}
+          driverId={item.driverId}
+          url={item.url}
+          navigation={navigation}
         />
       </>
     );
@@ -78,7 +105,11 @@ const DriversTable = ({data}) => {
   return (
     <>
       <DriversHeadRow />
-      <FlatList data={data} renderItem={_renderItem} keyExtractor={item => item.driverId}/>
+      <FlatList
+        data={data}
+        renderItem={_renderItem}
+        keyExtractor={(item) => item.driverId}
+      />
     </>
   );
 };

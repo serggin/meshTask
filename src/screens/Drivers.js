@@ -6,7 +6,7 @@ import {loadDrivers, loadTestJson} from '../api/api';
 import Paginator from '../components/Paginator';
 import DriversTable from '../components/DriversTable';
 
-const Drivers = () => {
+const Drivers = ({navigation}) => {
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(2);
   const [limit, setLimit] = useState(8);
@@ -36,6 +36,7 @@ const Drivers = () => {
             number: item.permanentNumber || '',
             nationality: item.nationality,
             born: item.dateOfBirth,
+            url: item.url,
           })),
         );
       })
@@ -63,14 +64,14 @@ const Drivers = () => {
         break;
     }
     setPage(p);
-    setOffset(limit*(p-1));
+    setOffset(limit * (p - 1));
   };
 
   return (
     <View style={globalStyles.screen}>
       {/*<Text style={globalStyles.boxText}>Drivers</Text>*/}
       <Paginator page={page} pages={pages} onPage={onPage} />
-      <DriversTable data={tableData} />
+      <DriversTable data={tableData} navigation={navigation} />
       {/*<Paginator {...{page, pages, onPage}} />*/}
     </View>
   );

@@ -21,7 +21,7 @@ const Paginator = ({pages, page, onPage}) => {
     Alert.alert(command);
   };
   return (
-    pages > 1 && (
+    pages > -1 && (
       <View style={styles.paginator}>
         <Text>Page : </Text>
         <Button

@@ -27,6 +27,10 @@ export const loadDrivers = (limit = 10, offset = 0) => {
     });
 };
 
+/*export const loadDriver = (driverId) => {
+  const url = baseURL +
+}*/
+
 //https://next.json-generator.com/api/json/get/Ny2nSJTeK
 
 export const loadTestJson = () => {
