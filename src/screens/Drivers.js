@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Text, View} from 'react-native';
 
-import globalStyles from '../styles/styles';
+import globalStyles from '../styles';
 import {loadDrivers, loadTestJson} from '../api/api';
 import Paginator from '../components/Paginator';
 import DriversTable from '../components/DriversTable';
@@ -9,7 +9,7 @@ import DriversTable from '../components/DriversTable';
 const Drivers = () => {
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(2);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(8);
   const [offset, setOffset] = useState(0);
   const [total, setTotal] = useState(0);
   const [tableData, setTableData] = useState([]);
@@ -45,13 +45,33 @@ const Drivers = () => {
       });
   }, [offset]);
 
-  const onPage = (command) => {};
+  const onPage = (command) => {
+    console.log('onPage() command=', command);
+    let p = page;
+    switch (command) {
+      case 'first':
+        p = 1;
+        break;
+      case 'prev':
+        p--;
+        break;
+      case 'next':
+        p++;
+        break;
+      case 'last':
+        p = pages;
+        break;
+    }
+    setPage(p);
+    setOffset(limit*(p-1));
+  };
 
   return (
     <View style={globalStyles.screen}>
-      <Text style={globalStyles.boxText}>Drivers</Text>
+      {/*<Text style={globalStyles.boxText}>Drivers</Text>*/}
+      <Paginator page={page} pages={pages} onPage={onPage} />
       <DriversTable data={tableData} />
-      <Paginator {...{page, pages, onPage}} />
+      {/*<Paginator {...{page, pages, onPage}} />*/}
     </View>
   );
 };

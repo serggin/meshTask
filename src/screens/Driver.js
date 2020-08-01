@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text, View} from 'react-native';
-import globalStyles from '../styles/styles';
+import globalStyles from '../styles';
 
 const Driver = () => {
   return (

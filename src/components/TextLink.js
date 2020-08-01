@@ -2,7 +2,7 @@ import React from 'react';
 import {Text} from 'react-native';
 import PropTypes from 'prop-types';
 
-import globalStyles from '../styles/styles';
+import globalStyles from '../styles';
 
 /**
  * Компонент "Текстовая ссылка"
