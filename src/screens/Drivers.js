@@ -1,15 +1,41 @@
 import React, {useEffect, useState} from 'react';
-import {Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 
-import globalStyles from '../styles';
+import globalStyles, {
+  getDriversPageLimit,
+  getDriversHeadHeight,
+  getDriversRowHeight,
+} from '../styles';
 import {loadDrivers} from '../api/api';
 import Paginator from '../components/Paginator';
 import DriversTable from '../components/DriversTable';
 
+const styles = StyleSheet.create({
+  test: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    flexDirection: 'column',
+  },
+  testHead: {
+    flex: 1,
+    backgroundColor: '#ffff0033',
+    height: getDriversHeadHeight(),
+  },
+  testRow: {
+    flex: 1,
+    backgroundColor: '#00ff0033',
+    height: getDriversRowHeight()*5,
+  },
+});
+
 const Drivers = ({navigation}) => {
+  console.log('getDriversPageLimit()=', getDriversPageLimit());
+
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(2);
-  const [limit, setLimit] = useState(8);
+  const [limit, setLimit] = useState(getDriversPageLimit());
   const [offset, setOffset] = useState(0);
   const [total, setTotal] = useState(0);
   const [tableData, setTableData] = useState([]);
@@ -69,12 +95,16 @@ const Drivers = ({navigation}) => {
   };
 
   return (
-    <View style={globalStyles.screen}>
-      {/*<Text style={globalStyles.boxText}>Drivers</Text>*/}
-      <Paginator page={page} pages={pages} onPage={onPage} />
-      <DriversTable data={tableData} navigation={navigation} />
-      {/*<Paginator {...{page, pages, onPage}} />*/}
-    </View>
+    <>
+      <View style={globalStyles.screen}>
+        <Paginator page={page} pages={pages} onPage={onPage} />
+        <DriversTable data={tableData} navigation={navigation} />
+      </View>
+      <View style={styles.test}>
+        <View style={styles.testHead} />
+        <View style={styles.testRow} />
+      </View>
+    </>
   );
 };
 

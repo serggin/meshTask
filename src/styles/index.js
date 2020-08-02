@@ -21,6 +21,43 @@ const h1TextSize = [24, 32, 48];
 const h2TextSize = [20, 28, 40];
 const textSize = [12, 16, 20];
 
+const racesHeadHeight = [128, 150, 186];
+const racesRowHeight = [48, 52, 58];
+const getRacesPageLimit = () => {
+  console.log(
+    'getRacesPageLimit',
+    screenWidth,
+    sizeIndex,
+    screenHeight,
+    racesHeadHeight[sizeIndex],
+    racesRowHeight[sizeIndex],
+  );
+  return Math.floor(
+    (screenHeight - racesHeadHeight[sizeIndex] * 2) / racesRowHeight[sizeIndex],
+  );
+};
+const getRacesHeadHeight = () => racesHeadHeight[sizeIndex];
+const getRacesRowHeight = () => racesRowHeight[sizeIndex];
+
+const driversHeadHeight = [82, 88, 94];
+const driversRowHeight = [37, 42, 48];
+const getDriversPageLimit = () => {
+  console.log(
+    'getDriversPageLimit',
+    screenWidth,
+    sizeIndex,
+    screenHeight,
+    driversHeadHeight[sizeIndex],
+    driversRowHeight[sizeIndex],
+  );
+  return Math.floor(
+    (screenHeight - driversHeadHeight[sizeIndex] * 2) /
+      driversRowHeight[sizeIndex],
+  );
+};
+const getDriversHeadHeight = () => driversHeadHeight[sizeIndex];
+const getDriversRowHeight = () => driversRowHeight[sizeIndex];
+
 const baseTextSize = textSize[sizeIndex];
 
 const getSize = (type, size) => {
@@ -53,7 +90,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'stretch',
     justifyContent: 'flex-start',
-    paddingTop: StatusBar.currentHeight,
+    // paddingTop: StatusBar.currentHeight,
   },
   boxText: {
     color: 'red',
@@ -64,12 +101,22 @@ const styles = StyleSheet.create({
   },
   h1Text: {
     fontSize: h1TextSize[sizeIndex],
-    //color: colorSchema.text[1],
     fontWeight: 'bold',
-    //paddingTop: h1TextSize[sizeIndex] / 2,
+    paddingLeft: h1TextSize[sizeIndex] / 4,
     paddingBottom: h1TextSize[sizeIndex] / 4,
   },
 });
 
 export default styles;
-export {screenWidth, screenHeight, getSize, baseTextSize};
+export {
+  screenWidth,
+  screenHeight,
+  getSize,
+  baseTextSize,
+  getRacesPageLimit,
+  getRacesHeadHeight,
+  getRacesRowHeight,
+  getDriversPageLimit,
+  getDriversHeadHeight,
+  getDriversRowHeight,
+};

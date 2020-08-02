@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Button, Text, View, Alert} from 'react-native';
 import {StyleSheet} from 'react-native';
 
-import TextLink from './TextLink';
+import {getSize} from '../styles';
 
 const styles = StyleSheet.create({
   paginator: {
@@ -14,6 +14,9 @@ const styles = StyleSheet.create({
     //borderWidth: 1,
     padding: 5,
   },
+  text: {
+    fontSize: getSize('TEXT'),
+  },
 });
 
 const Paginator = ({pages, page, onPage}) => {
@@ -23,7 +26,7 @@ const Paginator = ({pages, page, onPage}) => {
   return (
     pages > -1 && (
       <View style={styles.paginator}>
-        <Text>Page : </Text>
+        <Text style={styles.text}>Page : </Text>
         <Button
           title="First"
           disabled={page == 1}
@@ -34,7 +37,7 @@ const Paginator = ({pages, page, onPage}) => {
           disabled={page == 1}
           onPress={() => onPage('prev')}
         />
-        <Text>{page}</Text>
+        <Text style={styles.text}>{page}</Text>
         <Button
           title="Next"
           disabled={page == pages}
@@ -45,7 +48,7 @@ const Paginator = ({pages, page, onPage}) => {
           disabled={page == pages}
           onPress={() => onPage('last')}
         />
-        <Text>({pages})</Text>
+        <Text style={styles.text}>({pages})</Text>
       </View>
     )
   );

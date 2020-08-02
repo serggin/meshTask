@@ -7,7 +7,7 @@ import globalStyles, {getSize} from '../styles';
 
 const styles = StyleSheet.create({
   head: {
-    backgroundColor: '#cccccc',
+    backgroundColor: '#dddddd',
     borderColor: '#333333',
     borderWidth: 1,
     padding: 5,
@@ -16,30 +16,36 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   headCell: {
-    flex: 3,
+    flex: 1,
     fontSize: getSize('TEXT'),
     fontWeight: 'bold',
+    //borderTopColor: '#333333',
+    //borderTopWidth: 1,
   },
   raceCell: {
     textAlign: 'center',
-    borderBottomColor: '#333333',
-    borderBottomWidth: 1,
-    padding: 5,
   },
   posCell: {
-    //textAlign: 'left',
-    flex: 1,
+    flex: 2,
+  },
+  statusCell: {
+    flex: 5,
+  },
+  pointsCell: {
+    flex: 2,
   },
   constructorCell: {
-    flex: 4,
+    flex: 6,
   },
   dataRow: {
     flexDirection: 'row',
     padding: 10,
   },
   dataCell: {
-    flex: 3,
+    flex: 1,
     fontSize: getSize('TEXT'),
+    borderBottomColor: '#333333',
+    borderBottomWidth: 1,
   },
 });
 
@@ -54,8 +60,8 @@ const RacesHeadRow = () => {
           Constructor
         </Text>
         <Text style={[styles.headCell, styles.posCell]}>Pos</Text>
-        <Text style={[styles.headCell]}>Status</Text>
-        <Text style={[styles.headCell]}>Points</Text>
+        <Text style={[styles.headCell, styles.statusCell]}>Status</Text>
+        <Text style={[styles.headCell, styles.pointsCell]}>Points</Text>
       </View>
     </View>
   );
@@ -68,8 +74,8 @@ const RacesDataRow = ({pos, constructor, status, points}) => {
         {constructor}
       </Text>
       <Text style={[styles.dataCell, styles.posCell]}>{pos}</Text>
-      <Text style={[styles.dataCell]}>{status}</Text>
-      <Text style={[styles.dataCell]}>{points}</Text>
+      <Text style={[styles.dataCell, styles.statusCell]}>{status}</Text>
+      <Text style={[styles.dataCell, styles.pointsCell]}>{points}</Text>
     </View>
   );
 };
@@ -95,7 +101,7 @@ const RacesTable = ({data}) => {
       <FlatList
         data={data}
         renderItem={_renderItem}
-        keyExtractor={(item) => item.data}
+        keyExtractor={(item) => item.date}
       />
     </>
   );

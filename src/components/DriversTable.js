@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import {FlatList, Text, View, StyleSheet} from 'react-native';
 
-import globalStyles, {getSize} from '../styles';
+import globalStyles, {getDriversPageLimit, getSize} from '../styles';
 import TextLink from './TextLink';
 
 const styles = StyleSheet.create({
@@ -14,30 +14,31 @@ const styles = StyleSheet.create({
   },
   headRow: {
     flexDirection: 'row',
-    backgroundColor: '#333333',
+    backgroundColor: '#dddddd',
     borderColor: '#333333',
     borderWidth: 1,
     padding: 10,
   },
   dataCell: {
-    flex: 3,
+    flex: 5,
     fontSize: getSize('TEXT'),
   },
   headCell: {
-    flex: 3,
+    flex: 5,
     fontSize: getSize('TEXT'),
     fontWeight: 'bold',
   },
   nameCell: {
-    //textAlign: 'left',
-    flex: 7,
-  },
-  numberCell: {
-    flex: 1,
-    //minWidth: getSize('TEXT', 'LARGE'),
+    flex: 9,
   },
   racesCell: {
+    flex: 3,
+  },
+  numberCell: {
     flex: 2,
+  },
+  nationalityCell: {
+    flex: 1,
   },
 });
 
@@ -87,6 +88,7 @@ const DriversTableRow = ({
 
 const DriversTable = ({data, navigation}) => {
   console.log('DriversTable data=', data);
+
   const _renderItem = ({item}) => {
     return (
       <>
