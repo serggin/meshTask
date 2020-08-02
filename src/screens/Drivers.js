@@ -26,13 +26,11 @@ const styles = StyleSheet.create({
   testRow: {
     flex: 1,
     backgroundColor: '#00ff0033',
-    height: getDriversRowHeight()*5,
+    height: getDriversRowHeight() * 5,
   },
 });
 
 const Drivers = ({navigation}) => {
-  console.log('getDriversPageLimit()=', getDriversPageLimit());
-
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(2);
   const [limit, setLimit] = useState(getDriversPageLimit());
@@ -43,19 +41,14 @@ const Drivers = ({navigation}) => {
   useEffect(() => {
     loadDrivers(limit, offset)
       .then((data) => {
-        console.log('drivers data = ', data);
-        console.log('data.MRData=', data.MRData);
-        //console.log('data.MRData.DriverTable=', data.MRData.DriverTable);
-        //console.log('data.MRData.total=', data.MRData.total);
+        //console.log('data.MRData=', data.MRData);
 
         if (offset === 0) {
           const total = data.MRData.total;
           setTotal(total);
-          console.log('total=', total);
           setPages(Math.ceil(total / limit));
           setPage(1);
         }
-        console.log('Driver=', data.MRData.DriverTable.Drivers[9]);
         setTableData(
           data.MRData.DriverTable.Drivers.map((item) => ({
             driverId: item.driverId,
@@ -74,7 +67,6 @@ const Drivers = ({navigation}) => {
   }, [offset]);
 
   const onPage = (command) => {
-    console.log('onPage() command=', command);
     let p = page;
     switch (command) {
       case 'first':
@@ -100,10 +92,10 @@ const Drivers = ({navigation}) => {
         <Paginator page={page} pages={pages} onPage={onPage} />
         <DriversTable data={tableData} navigation={navigation} />
       </View>
-      <View style={styles.test}>
+      {/*<View style={styles.test}>
         <View style={styles.testHead} />
         <View style={styles.testRow} />
-      </View>
+      </View>*/}
     </>
   );
 };

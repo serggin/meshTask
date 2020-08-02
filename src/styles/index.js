@@ -24,14 +24,6 @@ const textSize = [12, 16, 20];
 const racesHeadHeight = [128, 150, 186];
 const racesRowHeight = [48, 52, 58];
 const getRacesPageLimit = () => {
-  console.log(
-    'getRacesPageLimit',
-    screenWidth,
-    sizeIndex,
-    screenHeight,
-    racesHeadHeight[sizeIndex],
-    racesRowHeight[sizeIndex],
-  );
   return Math.floor(
     (screenHeight - racesHeadHeight[sizeIndex] * 2) / racesRowHeight[sizeIndex],
   );
@@ -42,14 +34,6 @@ const getRacesRowHeight = () => racesRowHeight[sizeIndex];
 const driversHeadHeight = [82, 88, 94];
 const driversRowHeight = [37, 42, 48];
 const getDriversPageLimit = () => {
-  console.log(
-    'getDriversPageLimit',
-    screenWidth,
-    sizeIndex,
-    screenHeight,
-    driversHeadHeight[sizeIndex],
-    driversRowHeight[sizeIndex],
-  );
   return Math.floor(
     (screenHeight - driversHeadHeight[sizeIndex] * 2) /
       driversRowHeight[sizeIndex],
@@ -90,7 +74,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'stretch',
     justifyContent: 'flex-start',
-    // paddingTop: StatusBar.currentHeight,
   },
   boxText: {
     color: 'red',

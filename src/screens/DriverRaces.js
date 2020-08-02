@@ -31,8 +31,6 @@ const styles = StyleSheet.create({
 });
 
 const DriverRaces = ({route}) => {
-  console.log('Driver route.params=', route.params);
-  console.log('getRacesPageLimit()=', getRacesPageLimit());
   const {driverId, name} = route.params;
 
   const [page, setPage] = useState(1);
@@ -45,23 +43,14 @@ const DriverRaces = ({route}) => {
   useEffect(() => {
     loadDriverRacers(driverId, limit, offset)
       .then((data) => {
-        console.log('driverRaces data = ', data);
-        console.log('data.MRData=', data.MRData);
-        //console.log('data.MRData.DriverTable=', data.MRData.DriverTable);
-        //console.log('data.MRData.total=', data.MRData.total);
+        //console.log('data.MRData=', data.MRData);
 
         if (offset === 0) {
           const total = data.MRData.total;
           setTotal(total);
-          //console.log('total=', total, 'data.MRData.total=', data.MRData.total);
           setPages(Math.ceil(total / limit));
           setPage(1);
         }
-        console.log('Race=', data.MRData.RaceTable.Races[0]);
-        console.log(
-          'Constructor=',
-          data.MRData.RaceTable.Races[0].Results[0].Constructor,
-        );
 
         setTableData(
           data.MRData.RaceTable.Races.map((item) => ({
@@ -81,7 +70,6 @@ const DriverRaces = ({route}) => {
   }, [offset]);
 
   const onPage = (command) => {
-    console.log('onPage() command=', command);
     let p = page;
     switch (command) {
       case 'first':
@@ -108,10 +96,10 @@ const DriverRaces = ({route}) => {
         <Paginator page={page} pages={pages} onPage={onPage} />
         <DraverRacesTable data={tableData} />
       </View>
-      <View style={styles.test}>
+      {/*<View style={styles.test}>
         <View style={styles.testHead} />
         <View style={styles.testRow} />
-      </View>
+      </View>*/}
     </>
   );
 };

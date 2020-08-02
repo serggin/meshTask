@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 
 import {FlatList, Text, View, StyleSheet} from 'react-native';
 
-import globalStyles, {getDriversPageLimit, getSize} from '../styles';
+import {getSize} from '../styles';
 import TextLink from './TextLink';
 
 const styles = StyleSheet.create({
   dataRow: {
     flexDirection: 'row',
-    //justifyContent: 'space-between',
     padding: 10,
   },
   headRow: {
@@ -87,7 +86,7 @@ const DriversTableRow = ({
 };
 
 const DriversTable = ({data, navigation}) => {
-  console.log('DriversTable data=', data);
+  //console.log('DriversTable data=', data);
 
   const _renderItem = ({item}) => {
     return (

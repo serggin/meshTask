@@ -10,8 +10,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    //borderColor: '#333333',
-    //borderWidth: 1,
     padding: 5,
   },
   text: {
@@ -20,9 +18,6 @@ const styles = StyleSheet.create({
 });
 
 const Paginator = ({pages, page, onPage}) => {
-  const onPage1 = (command) => {
-    Alert.alert(command);
-  };
   return (
     pages > -1 && (
       <View style={styles.paginator}>

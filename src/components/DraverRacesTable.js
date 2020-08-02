@@ -1,9 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import {FlatList, Text, View, StyleSheet} from 'react-native';
 
-import globalStyles, {getSize} from '../styles';
+import {getSize} from '../styles';
 
 const styles = StyleSheet.create({
   head: {
@@ -19,8 +18,6 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: getSize('TEXT'),
     fontWeight: 'bold',
-    //borderTopColor: '#333333',
-    //borderTopWidth: 1,
   },
   raceCell: {
     textAlign: 'center',
