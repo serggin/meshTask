@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Text, View} from 'react-native';
 
 import globalStyles from '../styles';
-import {loadDrivers, loadTestJson} from '../api/api';
+import {loadDrivers} from '../api/api';
 import Paginator from '../components/Paginator';
 import DriversTable from '../components/DriversTable';
 
@@ -23,7 +23,8 @@ const Drivers = ({navigation}) => {
         //console.log('data.MRData.total=', data.MRData.total);
 
         if (offset === 0) {
-          setTotal(data.MRData.total);
+          const total = data.MRData.total;
+          setTotal(total);
           console.log('total=', total);
           setPages(Math.ceil(total / limit));
           setPage(1);

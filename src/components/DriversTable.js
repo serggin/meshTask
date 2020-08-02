@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
   },
   headRow: {
     flexDirection: 'row',
+    backgroundColor: '#333333',
     borderColor: '#333333',
     borderWidth: 1,
     padding: 10,
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   nameCell: {
-    textAlign: 'left',
+    //textAlign: 'left',
     flex: 7,
   },
   numberCell: {
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
 
 const DriversHeadRow = () => {
   return (
-    <View style={styles.dataRow}>
+    <View style={styles.headRow}>
       <Text style={[styles.headCell, styles.nameCell]}>Name</Text>
       <Text style={[styles.headCell, styles.racesCell]}>Races</Text>
       <Text style={[styles.headCell, styles.numberCell]}>N#</Text>
@@ -73,7 +74,7 @@ const DriversTableRow = ({
       <TextLink
         style={[styles.dataCell, styles.racesCell]}
         onPress={() => {
-          navigation.navigate('DriverRaces', {driverId});
+          navigation.navigate('DriverRaces', {driverId, name});
         }}>
         Races
       </TextLink>

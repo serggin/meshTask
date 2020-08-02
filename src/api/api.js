@@ -27,9 +27,34 @@ export const loadDrivers = (limit = 10, offset = 0) => {
     });
 };
 
-/*export const loadDriver = (driverId) => {
-  const url = baseURL +
-}*/
+export const loadDriverRacers = (driverId, limit = 5, offset = 0) => {
+  const url =
+    baseURL +
+    `drivers/${driverId}/results.json?limit=${limit}&offset=${offset}`;
+  console.log('loadDrivers url=', url);
+  // eslint-disable-next-line no-undef
+  const request = new Request(url);
+
+  return fetch(request)
+    .then((response) => {
+      if (response.ok) {
+        return response.text();
+      } else {
+        return response.text().then((text) => {
+          console.error('error response=', text);
+          throw new Error(text);
+        });
+      }
+    })
+    .then((text) => {
+      //console.log('loadSearchPageData ok response=', JSON.parse(text));
+      return JSON.parse(text);
+    })
+    .catch((error) => {
+      console.error('in api loadDriverRacers fetch(): ', error);
+      throw error;
+    });
+};
 
 //https://next.json-generator.com/api/json/get/Ny2nSJTeK
 

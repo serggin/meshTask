@@ -62,6 +62,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#0364AB',
   },
+  h1Text: {
+    fontSize: h1TextSize[sizeIndex],
+    //color: colorSchema.text[1],
+    fontWeight: 'bold',
+    //paddingTop: h1TextSize[sizeIndex] / 2,
+    paddingBottom: h1TextSize[sizeIndex] / 4,
+  },
 });
 
 export default styles;
