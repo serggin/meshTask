@@ -1,15 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 
 import globalStyles, {
   getDriversPageLimit,
-  getDriversHeadHeight,
-  getDriversRowHeight,
+  //  getDriversHeadHeight,
+  //  getDriversRowHeight,
 } from '../styles';
 import {loadDrivers} from '../api/api';
 import Paginator from '../components/Paginator';
 import DriversTable from '../components/DriversTable';
 
+//Used only while selecting DriversPageLimit
+/*
 const styles = StyleSheet.create({
   test: {
     position: 'absolute',
@@ -29,45 +31,45 @@ const styles = StyleSheet.create({
     height: getDriversRowHeight() * 5,
   },
 });
+*/
 
 const Drivers = ({navigation}) => {
-  const [page, setPage] = useState(1);
-  const [pages, setPages] = useState(2);
-  const [limit, setLimit] = useState(getDriversPageLimit());
-  const [offset, setOffset] = useState(0);
-  const [total, setTotal] = useState(0);
-  const [tableData, setTableData] = useState([]);
+  const limit = getDriversPageLimit();
+  const [page, setPage] = useState(1); // for loading data only!
+  const [state, setState] = useState({page: 0, pages: 0, tableData: []}); // for rendering
 
   useEffect(() => {
+    const offset = limit * (page - 1);
     loadDrivers(limit, offset)
       .then((data) => {
         //console.log('data.MRData=', data.MRData);
-
+        let pages = state.pages;
         if (offset === 0) {
           const total = data.MRData.total;
-          setTotal(total);
-          setPages(Math.ceil(total / limit));
-          setPage(1);
+          pages = Math.ceil(total / limit);
         }
-        setTableData(
-          data.MRData.DriverTable.Drivers.map((item) => ({
-            driverId: item.driverId,
-            name: item.familyName + ' ' + item.givenName,
-            number: item.permanentNumber || '',
-            nationality: item.nationality,
-            born: item.dateOfBirth,
-            url: item.url,
-          })),
-        );
+        const tableData = data.MRData.DriverTable.Drivers.map((item) => ({
+          driverId: item.driverId,
+          name: item.familyName + ' ' + item.givenName,
+          number: item.permanentNumber || '',
+          nationality: item.nationality,
+          born: item.dateOfBirth,
+          url: item.url,
+        }));
+        setState({
+          page,
+          pages,
+          tableData,
+        });
       })
       .catch((error) => {
         console.error('in Drivers useEffect: ', error);
         throw error;
       });
-  }, [offset]);
+  }, [page]);
 
   const onPage = (command) => {
-    let p = page;
+    let p = state.page;
     switch (command) {
       case 'first':
         p = 1;
@@ -79,18 +81,17 @@ const Drivers = ({navigation}) => {
         p++;
         break;
       case 'last':
-        p = pages;
+        p = state.pages;
         break;
     }
     setPage(p);
-    setOffset(limit * (p - 1));
   };
 
   return (
     <>
       <View style={globalStyles.screen}>
-        <Paginator page={page} pages={pages} onPage={onPage} />
-        <DriversTable data={tableData} navigation={navigation} />
+        <Paginator page={state.page} pages={state.pages} onPage={onPage} />
+        <DriversTable data={state.tableData} navigation={navigation} />
       </View>
       {/*<View style={styles.test}>
         <View style={styles.testHead} />

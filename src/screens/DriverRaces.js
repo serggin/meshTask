@@ -3,13 +3,15 @@ import {StyleSheet, Text, View} from 'react-native';
 
 import globalStyles, {
   getRacesPageLimit,
-  getRacesHeadHeight,
-  getRacesRowHeight,
+  //  getRacesHeadHeight,
+  //  getRacesRowHeight,
 } from '../styles';
 import {loadDriverRacers} from '../api/api';
 import Paginator from '../components/Paginator';
 import DraverRacesTable from '../components/DraverRacesTable';
 
+//Used only while selecting RacesPageLimit
+/*
 const styles = StyleSheet.create({
   test: {
     position: 'absolute',
@@ -29,48 +31,46 @@ const styles = StyleSheet.create({
     height: getRacesRowHeight(),
   },
 });
+*/
 
 const DriverRaces = ({route}) => {
   const {driverId, name} = route.params;
-
-  const [page, setPage] = useState(1);
-  const [pages, setPages] = useState(2);
-  const [limit, setLimit] = useState(getRacesPageLimit());
-  const [offset, setOffset] = useState(0);
-  const [total, setTotal] = useState(0);
-  const [tableData, setTableData] = useState([]);
+  const limit = getRacesPageLimit();
+  const [page, setPage] = useState(1); // for loading data only!
+  const [state, setState] = useState({page: 0, pages: 0, tableData: []}); // for rendering
 
   useEffect(() => {
+    const offset = limit * (page - 1);
     loadDriverRacers(driverId, limit, offset)
       .then((data) => {
         //console.log('data.MRData=', data.MRData);
-
+        let pages = state.pages;
         if (offset === 0) {
           const total = data.MRData.total;
-          setTotal(total);
-          setPages(Math.ceil(total / limit));
-          setPage(1);
+          pages = Math.ceil(total / limit);
         }
-
-        setTableData(
-          data.MRData.RaceTable.Races.map((item) => ({
-            race: item.season + ' ' + item.raceName,
-            pos: item.Results[0].position,
-            constructor: item.Results[0].Constructor.name,
-            status: item.Results[0].status,
-            points: item.Results[0].points,
-            date: item.date,
-          })),
-        );
+        const tableData = data.MRData.RaceTable.Races.map((item) => ({
+          race: item.season + ' ' + item.raceName,
+          pos: item.Results[0].position,
+          constructor: item.Results[0].Constructor.name,
+          status: item.Results[0].status,
+          points: item.Results[0].points,
+          date: item.date,
+        }));
+        setState({
+          page,
+          pages,
+          tableData,
+        });
       })
       .catch((error) => {
-        console.error('in Drivers useEffect: ', error);
+        console.error('in DriverRaces useEffect: ', error);
         throw error;
       });
-  }, [offset]);
+  }, [page]);
 
   const onPage = (command) => {
-    let p = page;
+    let p = state.page;
     switch (command) {
       case 'first':
         p = 1;
@@ -82,19 +82,18 @@ const DriverRaces = ({route}) => {
         p++;
         break;
       case 'last':
-        p = pages;
+        p = state.pages;
         break;
     }
     setPage(p);
-    setOffset(limit * (p - 1));
   };
 
   return (
     <>
       <View style={globalStyles.screen}>
         <Text style={globalStyles.h1Text}>{name}</Text>
-        <Paginator page={page} pages={pages} onPage={onPage} />
-        <DraverRacesTable data={tableData} />
+        <Paginator page={state.page} pages={state.pages} onPage={onPage} />
+        <DraverRacesTable data={state.tableData} />
       </View>
       {/*<View style={styles.test}>
         <View style={styles.testHead} />
